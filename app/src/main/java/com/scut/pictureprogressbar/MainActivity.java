@@ -17,26 +17,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn_start = (Button) findViewById(R.id.btn_start);
-        pb_1 = (PictureProgressBar) findViewById(R.id.pb_1);
-        pb_1.setDrawableIds(new int[]{R.drawable.i00, R.drawable.i01, R.drawable.i02, R.drawable.i03, R.drawable.i04, R.drawable.i05, R.drawable.i06});
-        pb_2 = (PictureProgressBar) findViewById(R.id.pb_2);
-        pb_3 = (PictureProgressBar) findViewById(R.id.pb_3);
-        pb_4 = (PictureProgressBar) findViewById(R.id.pb_4);
-        pb_5 = (PictureProgressBar) findViewById(R.id.pb_5);
-//        try {
-//            pb_1.setBarBackgroundDrawableId(R.drawable.background_1);
-//            pb_1.setBarDrawableId(R.drawable.bar_1);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
+        initView();
+        initData();
 
         //使用属性动画来实现进度的变化
+        initAnimation();
+    }
+
+    private void initAnimation() {
         final ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 1000);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                Log.d("sdsa", "onAnimationUpdate: " + Integer.parseInt(animation.getAnimatedValue().toString()));
                 pb_1.setProgress(Integer.parseInt(animation.getAnimatedValue().toString()));
                 if (pb_1.getProgress() >= pb_1.getMax()) {
                     //进度满了之后停止动画
@@ -62,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         valueAnimator.setDuration(10000);
+
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,5 +67,18 @@ public class MainActivity extends AppCompatActivity {
                 valueAnimator.start();
             }
         });
+    }
+
+    private void initData() {
+        pb_1.setDrawableIds(new int[]{R.drawable.i00, R.drawable.i01, R.drawable.i02, R.drawable.i03, R.drawable.i04, R.drawable.i05, R.drawable.i06});
+    }
+
+    private void initView() {
+        btn_start = (Button) findViewById(R.id.btn_start);
+        pb_1 = (PictureProgressBar) findViewById(R.id.pb_1);
+        pb_2 = (PictureProgressBar) findViewById(R.id.pb_2);
+        pb_3 = (PictureProgressBar) findViewById(R.id.pb_3);
+        pb_4 = (PictureProgressBar) findViewById(R.id.pb_4);
+        pb_5 = (PictureProgressBar) findViewById(R.id.pb_5);
     }
 }
