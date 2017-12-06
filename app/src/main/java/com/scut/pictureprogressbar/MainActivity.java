@@ -12,6 +12,7 @@ import com.yanzhikai.pictureprogressbar.PictureProgressBar;
 public class MainActivity extends AppCompatActivity {
     Button btn_start;
     PictureProgressBar pb_1, pb_2, pb_3, pb_4, pb_5;
+    private ValueAnimator valueAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +20,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+        initListener();
         initData();
 
         //使用属性动画来实现进度的变化
         initAnimation();
     }
 
+    private void initListener() {
+
+        // 开始动画
+        btn_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pb_1.setAnimRun(true);// 自定义图片
+                pb_2.setPicture(R.drawable.b333);// 初始图片
+                pb_3.setAnimRun(true);// 默认图片
+                pb_4.setAnimRun(true);
+                pb_5.setAnimRun(true);
+                valueAnimator.start();
+            }
+        });
+    }
+
     private void initAnimation() {
-        final ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 1000);
+        valueAnimator = ValueAnimator.ofInt(0, 1000);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -55,18 +73,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         valueAnimator.setDuration(10000);
-
-        btn_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pb_1.setAnimRun(true);
-                pb_2.setPicture(R.drawable.b333);
-                pb_3.setAnimRun(true);
-                pb_4.setAnimRun(true);
-                pb_5.setAnimRun(true);
-                valueAnimator.start();
-            }
-        });
     }
 
     private void initData() {
